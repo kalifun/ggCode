@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"path"
 
+	"github.com/kalifun/ggCode/pkg/folder"
+
 	"github.com/spf13/cobra"
 )
 
 var src string
 var target string
+var project string
 
 var Genrate = &cobra.Command{
 	Use:   "gen",
@@ -26,15 +29,26 @@ var Genrate = &cobra.Command{
 			if path.IsAbs(target) == false {
 				fmt.Println("TARGET is not an absolute path")
 			}
+			isTrue, err := folder.PathExists(src)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(isTrue)
+			isTrue, err = folder.PathExists(target)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(isTrue)
 		}
 	},
 }
 
 func Tips() {
-	fmt.Println("ggCode gen --src=/home/xxx/xxx.proto --target=/home/xxx/xxx")
+	fmt.Println("ggCode gen --project=github.com/xxx/xxxx --src=/home/xxx/xxx.proto --target=/home/xxx/xxx")
 }
 
 func init() {
+	Genrate.Flags().StringVarP(&project, "project", "p", "", "github.com/xxx/xxxx")
 	Genrate.Flags().StringVarP(&src, "src", "s", "", "Source directory to read from")
 	Genrate.Flags().StringVarP(&target, "target", "t", "", "Object files for generating code")
 }
