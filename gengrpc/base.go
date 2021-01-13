@@ -1,5 +1,50 @@
 package gengrpc
 
+import (
+	"fmt"
+	"os"
+	"path"
+
+	"github.com/kalifun/ggCode/pkg/folder"
+
+	"github.com/kalifun/ggCode/config"
+)
+
+func GenGrpcMain() {
+	if path.IsAbs(config.ConfSvr.Genrate.Src) == false {
+		fmt.Println("SRC is not an absolute path")
+		return
+	}
+	if path.IsAbs(config.ConfSvr.Genrate.Target) == false {
+		fmt.Println("Target is not an absolute path")
+		return
+	}
+
+	// 判断文件是否存在
+	ok, err := folder.PathExists(config.ConfSvr.Genrate.Src)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	if ok == false {
+		fmt.Println("File does not exist")
+		return
+	}
+	ok, err = folder.PathExists(config.ConfSvr.Genrate.Target)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	if ok == false {
+		err := os.Mkdir(config.ConfSvr.Genrate.Target, 0666)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+
+}
+
 type GenGrpcType struct {
 	SrcPath    string
 	TargetPath string

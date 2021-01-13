@@ -1,0 +1,5 @@
+genrate:
+  Src: /Users/kalifun/go/src/git.code.oa.com/annotate-group/grpc/proto/statistics_config
+  Target: "/Users/kalifun/2020Code/test/statistics"
+  Project: "github.com/kalifun/statistics"
+  GrpcWorkSpace: "github.com/kalifun/grpc/proto/statistics_config"
